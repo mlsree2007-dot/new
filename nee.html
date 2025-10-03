@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crop Management System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f8f5;
+      padding: 20px;
+    }
+    h1 {
+      color: #2e8b57;
+    }
+    input[type="text"] {
+      margin-top: 10px;
+      padding: 8px;
+      width: 100%;
+      max-width: 400px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+    }
+    th {
+      background-color: #e0f7e0;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌱 Crop Management System</h1>
+  <p>Search crops by name, moisture, temperature, or health status:</p>
+  <input type="text" id="searchBar" placeholder="Type to search..." />
+  <div id="output"></div>
+
+  <script>
+    const cropData = [
+      { "Crop Name": "Tomato", "Soil Moisture": "45%", "Temperature": "28°C", "Health Status": "Good" },
+      { "Crop Name": "Wheat", "Soil Moisture": "30%", "Temperature": "32°C", "Health Status": "Moderate" },
+      { "Crop Name": "Rice", "Soil Moisture": "60%", "Temperature": "26°C", "Health Status": "Excellent" },
+      { "Crop Name": "Corn", "Soil Moisture": "25%", "Temperature": "35°C", "Health Status": "Poor" }
+    ];
+
+    function renderTable(data) {
+      let html = "<table><tr>";
+      for (let key in data[0]) {
+        html += `<th>${key}</th>`;
+      }
+      html += "</tr>";
+      data.forEach(row => {
+        html += "<tr>";
+        for (let key in row) {
+          html += `<td>${row[key]}</td>`;
+        }
+        html += "</tr>";
+      });
+      html += "</table>";
+      document.getElementById("output").innerHTML = html;
+    }
+
+    document.getElementById("searchBar").addEventListener("input", function() {
+      const query = this.value.toLowerCase();
+      const filtered = cropData.filter(row =>
+        Object.values(row).some(val => val.toLowerCase().includes(query))
+      );
+      renderTable(filtered);
+    });
+
+    // Initial render
+    renderTable(cropData);
+  </script>
+</body>
+</html>
